@@ -1,7 +1,6 @@
 package com.github.mrmanolodg.blankgame.game;
 
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.RandomUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +27,8 @@ public class GameService {
     }
 
     public String createGame(String user){
-        String newUUID = RandomStringUtils.randomNumeric(6);
-        while(this.createdGames.containsKey(newUUID)){
-            newUUID = RandomStringUtils.randomNumeric(6);
-        }
-        this.createdGames.put(newUUID, new Game(newUUID, user));
-        logger.info("Created new Game with UUID: {}", newUUID);
-        return newUUID;
+
+        return "newUUID";
     }
 
     public Game getGame(String uuid){
@@ -60,8 +54,8 @@ public class GameService {
         Game game = this.createdGames.get(uuid);
         List<String> users = game.getUsers();
         // Choose blank users
-        int indexUser = RandomUtils.nextInt(0, users.size() - 1 );
-        String blankUser = users.get(indexUser);
+       // int indexUser = RandomUtils.nextInt(0, users.size() - 1 );
+        String blankUser = users.get(0);
         for (String user : users){
             if(user.equals(blankUser))
                 userWordMap.put(user, "Blank");
