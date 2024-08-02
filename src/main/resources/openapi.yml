@@ -1,0 +1,142 @@
+openapi: 3.0.3
+info:
+  title: Blank game API v2
+  version: 2.0.0
+paths:
+  /game:
+    post:
+      summary: Create a new game
+      description: Create a new game
+      operationId: createGame
+      requestBody:
+        description: create a new game
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGame"
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Game"
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /game/join:
+    post:
+      summary: Join to a game
+      operationId: joinGame
+      requestBody:
+        description: join a game payload
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JoinGame"
+        required: true
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Game"
+  /game/{id}:
+    get:
+      summary: Get game info
+      description: Get game info using uuid
+      operationId: GetGameById
+      parameters:
+        - in: path
+          required: true
+          name: id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Game"
+
+  /game/{id}/start:
+    post:
+      summary: Add a new pet to the store
+      description: Add a new pet to the store
+      operationId: startGame
+      parameters:
+        - in: path
+          required: true
+          name: id
+          schema:
+            type: string
+        - in: query
+          required: true
+          name: user
+          schema:
+            type: string
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Game"
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+
+
+components:
+  schemas:
+    Game:
+      type: object
+      properties:
+        id:
+          type: string
+        uuid:
+          type: string
+        totalBlankNumber:
+          type: integer
+        createdBy:
+          type: string
+        isEnded:
+          type: boolean
+        isStarted:
+          type: boolean
+        joinUrl:
+          type: string
+        users:
+          items:
+            type: string
+        userWordMap:
+          additionalProperties: true
+
+    CreateGame:
+      type: object
+      properties:
+        user:
+          type: string
+        totalBlankNumber:
+          type: integer
+    JoinGame:
+      type: object
+      properties:
+        user:
+          type: string
+        uuid:
+          type: string
+
+
